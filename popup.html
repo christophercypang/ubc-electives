@@ -1,0 +1,23 @@
+<!doctype html>
+<!--
+ This page is shown when the extension button is clicked, because the
+ "browser_action" field in manifest.json contains the "default_popup" key with
+ value "popup.html".
+ -->
+<html>
+  <head>
+    <title>UBC EZ Electives Popup Page</title> 
+    </head>
+
+    <body>
+    <script type = "text/javascript" src = "popup.js"></script>
+
+    <h3><center> Paste the links below </center></h3>
+
+    <textarea rows = "10" cols = "80" id="urls"></textarea>
+
+    <button type="submit" align="center" style="width:300px;" id="button">Submit</button>
+
+    </body>
+</html>
+
