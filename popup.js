@@ -1,62 +1,31 @@
-// open pages in new tabs
-function loadUrls() {
- 
-// fetch urls from textarea and split it
- var urls = document.getElementById('urls').value.split('n');
- 
-// run a loop on the fetched urls
- for(var i=0; i<urls.length; i++){
 
-// remove the white space from the url
- cleanUrl = urls[i].replace(/s/g, '');
+function onSubmit(coursename) {
 
-// if user input valid urls then open pages
- if(cleanUrl != '') {
- chrome.tabs.create({"url": cleanUrl, "selected": false}); 
- }
- 
-// if user input no url
- else {
- document.getElementById('urls').innerHTML = "No value spec ified";
-  }
- }
+	var courses = document.getElementById("coursename").value;
+	console.log("HELLO " + courses);
+
 }
 
-// Save url in chrome storage
-function saveUrls() {
- 
- // Fetch urls from textarea and split it
-var urls = document.getElementById('urls').value.split('n');
- 
- var urlsContainer = "";
- 
- // run a loop on the fetched urls
- for (i=0; i<urls.length; i++) {
 
+document.getElementById('highlight').addEventListener('click', sendHighlightMessage,false);
 
- // if the user input valid urls, save it in local chrome storage
- if(urls[i] != ' ') {
- 
- urlsContainer += urls[i] + 'n';
- localStorage['urls'] = urlsContainer;
+function sendHighlightMessage() {
+	chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+    chrome.tabs.sendMessage(tabs[0].id, {highlight: true}, function(response) {
+      console.log(response);
+    });
+  });
+}
 
+function highlightText(element) {
+  var nodes = element.childNodes;
+  for (var i = 0, l = nodes.length; i < l; i++) {
+    if (nodes[i].nodeType === 3)  // Node Type 3 is a text node
+      var text = nodes[i].innerHTML;
+      nodes[i].innerHTML = "<span style='background-color:#FFEA0'>" + text + "</span>";
     }
-   }
- }
- 
-
-document.addEventListener('DOMContentLoaded', function () {
- 
-// add an event listener to load url when button is clicked
- document.getElementById('button').addEventListener('click', loadUrls);
- 
- // add an event listener to save url when button is clicked
- document.getElementById('button').addEventListener('click', saveUrls);
- 
- // reload the urls in the browser
- var urls = localStorage['urls'];
- if (!urls) {
- return;
- }
- document.getElementById('urls').value = urls;
-});
+    else if (nodes[i].childNodes.length > 0) {
+      highlightText(nodes[i]);  // Not a text node or leaf, so check it's children
+    }
+  }
+}

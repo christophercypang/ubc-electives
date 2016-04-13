@@ -12,11 +12,15 @@
     <body>
     <script type = "text/javascript" src = "popup.js"></script>
 
-    <h3><center> Paste the links below </center></h3>
+    <h3><center> Course Number Goes Here (e.g. CPSC320) </center></h3>
 
-    <textarea rows = "10" cols = "80" id="urls"></textarea>
+    <input type = "text" name="courseNumber" id="coursename" style="width:300px;">
+    <p>
 
-    <button type="submit" align="center" style="width:300px;" id="button">Submit</button>
+    <button type="button" align="center" onclick="onSubmit(coursename)" id="coursenum" style="width:150px;">Submit</button>
+    <button type="button" align="center" onclick="onRemove()" id="courseremove" style="width:150px;">Remove</but
+
+
 
     </body>
 </html>
